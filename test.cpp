@@ -10,6 +10,27 @@ struct ListNode {
     ListNode(int x):val(x),next(NULL) {}
 };
 
+ListNode* buildlist(int arr[],int n){
+    if(n == 0) return NULL;
+    ListNode* head = new ListNode(arr[0]);
+    ListNode* cur = head;
+    for(int i = 1;i < n;i++){
+        cur->next = new ListNode(arr[i]);
+        cur = cur->next;
+    }
+    return head;
+}
+
+void printlist(ListNode* head){
+    ListNode* cur = head;
+    while(cur != NULL){
+        cout << cur->val;
+        if(cur->next)cout << "->";
+        cur = cur->next;
+    }
+    cout << endl;
+}
+
 class Solution {
 public:
     int minSubArrayLen(int s ,vector<int> & nums){
@@ -59,23 +80,36 @@ int main()
     // }
 
 
+// ***************************************************
+    // int s ;
 
-    int s ;
+    // cin >> s;
+    // int n;
+    // cin >> n;
+    // vector<int> nums(n);
+    // for(int i = 0; i < n;i++){
+    //     cin >> nums[i];
+    // }
 
-    cin >> s;
-    int n;
-    cin >> n;
-    vector<int> nums(n);
-    for(int i = 0; i < n;i++){
-        cin >> nums[i];
-    }
+    // Solution slu;
 
-    Solution slu;
+    // int ret = slu.minSubArrayLen(s,nums);
 
-    int ret = slu.minSubArrayLen(s,nums);
+    // cout << ret;
+//****************************************************
 
-    cout << ret;
+/**************************************************/
+int arr[] = {1,2,3,4,5,6,7};
+int n = sizeof(arr)/sizeof(arr[0]);
+ListNode * head = buildlist(arr,n);
 
+printlist(head);
+
+Solution solution;
+ListNode * result = solution.swapPairs(head);
+
+printlist(result);
+/**************************************************/
 
     return 0;
 }
