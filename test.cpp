@@ -33,7 +33,10 @@ void printlist(ListNode* head){
 
 class Solution {
 public:
-    int minSubArrayLen(int s ,vector<int> & nums){
+    /*
+    the shortest subarray that confirms to the sum
+    */
+    int minSubArrayLen(int s ,vector<int> & nums){ 
         int res = INT32_MAX;
         int length = 0;
         int sum = 0;
@@ -68,6 +71,26 @@ public:
         return dummyhead->next;
     }
 
+    ListNode * removeNthfromEnd(ListNode* head,int n){
+        ListNode * dummyhead = new ListNode(0);
+        dummyhead->next = head;
+        ListNode * slow = dummyhead;
+        ListNode * fast = dummyhead;
+
+        while(n-- && fast){  //注意这里不是fast->next
+            fast = fast->next;
+        }
+        fast = fast->next; //remove more a step ，slow指向删除节点的上一个
+
+        while(fast){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        slow->next = slow->next->next;
+
+        return dummyhead->next;
+
+    }
 };
 
 int main()
@@ -113,7 +136,8 @@ ListNode * head = buildlist(arr,n);
 printlist(head);
 
 Solution solution;
-ListNode * result = solution.swapPairs(head);
+// ListNode * result = solution.swapPairs(head);
+ListNode* result = solution.removeNthfromEnd(head,4);
 
 printlist(result);
 /**************************************************/
