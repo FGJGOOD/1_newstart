@@ -93,6 +93,7 @@ public:
 
     }
 
+    /*找到相交节点*/
     ListNode * getintersectionNode(ListNode* headA, ListNode* headB){
         ListNode* curA = headA;
         ListNode* curB = headB;
@@ -129,6 +130,53 @@ public:
 
         return NULL;
     }
+
+    /*判断链表环并找入口*/
+    ListNode * detectCycle(ListNode * head){
+        ListNode * fast = head;
+        ListNode * slow = head;
+
+        while(fast && fast->next ){
+            fast = fast->next->next;
+            slow = slow->next;
+            
+            if(fast == slow){
+                ListNode* cur1 = head;
+                ListNode* cur2 = fast;
+                
+                while(cur1 != cur2){
+                    cur1 = cur1->next;
+                    cur2 = cur2->next;
+                }
+
+                return cur1;
+            }
+
+            return NULL;
+        }
+
+    }
+
+    /***************************************************** */
+    
+    /*数组哈希，判断是否为异位词*/
+    bool isAnagram(string s, string t){
+        int c[26] = {0};
+        for(int i = 0;i < s.size();i++){
+            c[s[i]-'a']++;
+        }
+        for(int i = 0;i < t.size();i++){
+            c[t[i]-'a']--;
+        }
+
+        for(int i = 0;i < 26;i++){
+            if(c[i] != 0) return false;
+        }
+
+        return true;
+    }
+
+
 };
 
 int main()
@@ -168,27 +216,28 @@ int arr1[]  = {1,2,3,6};
 int n1 = sizeof(arr1)/sizeof(arr1[0]);
 ListNode * head1 = buildlist(arr1,n1);
 
-ListNode * cur = head1;
-int curnum = n1 - 1;
-while(curnum--){         //指向最后一个节点
-    cur = cur->next;
-}
+// ListNode * cur = head1;
+// int curnum = n1 - 1;
+// while(curnum--){         //指向最后一个节点
+//     cur = cur->next;
+// }
 
-ListNode * cur1 = head;
-for(int i = 0;i < 3;i++){
-    cur1 = cur1->next;
-}
-cur ->next = cur1;
+// ListNode * cur1 = head;
+// for(int i = 0;i < 3;i++){
+//     cur1 = cur1->next;
+// }
+// cur ->next = cur1;
+
+// printlist(head);
+// printlist(head1);
 
 printlist(head);
-printlist(head1);
 
 Solution solution;
 // ListNode * result = solution.swapPairs(head);
 // ListNode* result = solution.removeNthfromEnd(head,4);
-
-ListNode* result = solution.getintersectionNode(head,head1);
-cout << result->val << endl;
+// ListNode* result = solution.getintersectionNode(head,head1);
+// cout << result->val << endl;
 // printlist(result);
 /**************************************************/
 
