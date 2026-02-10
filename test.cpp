@@ -71,6 +71,7 @@ public:
         return dummyhead->next;
     }
 
+    /*移除倒数第n个节点*/
     ListNode * removeNthfromEnd(ListNode* head,int n){
         ListNode * dummyhead = new ListNode(0);
         dummyhead->next = head;
@@ -90,6 +91,43 @@ public:
 
         return dummyhead->next;
 
+    }
+
+    ListNode * getintersectionNode(ListNode* headA, ListNode* headB){
+        ListNode* curA = headA;
+        ListNode* curB = headB;
+
+        int lenA = 0, lenB = 0;
+
+        while(curA){
+            lenA++;
+            curA = curA->next;
+        }
+        while(curB){
+            lenB++;
+            curB = curB->next;
+        }
+        curA = headA;
+        curB = headB;
+
+        if(lenB > lenA){          //保证A是大的，gap为正
+            swap(lenA, lenB);
+            swap(curA,curB);
+        }
+
+        int gap = lenA-lenB;
+
+        while(gap--){            // ?这是对的
+            curA = curA->next;  
+        }
+
+        while(curA){   //一直往下找，直到结束
+            if(curA == curB) return curA;
+            curA = curA->next;
+            curB = curB->next;
+        }
+
+        return NULL;
     }
 };
 
@@ -133,13 +171,32 @@ int arr[] = {1,2,3,4,5,6,7};
 int n = sizeof(arr)/sizeof(arr[0]);
 ListNode * head = buildlist(arr,n);
 
+int arr1[]  = {1,2,3,6};
+int n1 = sizeof(arr1)/sizeof(arr1[0]);
+ListNode * head1 = buildlist(arr1,n1);
+
+ListNode * cur = head1;
+int curnum = n1 - 1;
+while(curnum--){         //指向最后一个节点
+    cur = cur->next;
+}
+
+ListNode * cur1 = head;
+for(int i = 0;i < 3;i++){
+    cur1 = cur1->next;
+}
+cur ->next = cur1;
+
 printlist(head);
+printlist(head1);
 
 Solution solution;
 // ListNode * result = solution.swapPairs(head);
-ListNode* result = solution.removeNthfromEnd(head,4);
+// ListNode* result = solution.removeNthfromEnd(head,4);
 
-printlist(result);
+ListNode* result = solution.getintersectionNode(head,head1);
+cout << result->val << endl;
+// printlist(result);
 /**************************************************/
 
 
