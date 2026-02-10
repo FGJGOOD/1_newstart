@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <set>
+#include <unordered_set>
 
 using namespace std;
 
@@ -176,6 +178,41 @@ public:
         return true;
     }
 
+    /*两数组交集*/
+    vector<int> intersection(vector<int>&nums1,vector<int>&nums2){
+        unordered_set<int> nums2_set(nums2.begin(),nums2.end());//begin()end()
+        unordered_set<int> result_set;
+        for(int num: nums1){
+            if(nums2_set.find(num) != nums2_set.end())
+            result_set.insert(num);
+        }
+        return vector<int>(result_set.begin(),result_set.end());//begin()end()
+    }
+
+    /*判断是否为happy数，一直找或进入循环*/
+    int getSum(int n){
+        int ret = 0;
+        while(n){
+            ret += (n%10)*(n%10);
+            n /= 10;
+        }
+        return ret;
+    }
+
+    bool isHappy(int n){
+        unordered_set<int> sum_set;
+
+        while(1){
+            int sum = getSum(n);
+            if(sum == 1) return true;
+            
+            else if(sum_set.find(sum) != sum_set.end()) return false;
+
+            else sum_set.insert(sum);
+
+            n = sum;
+        }
+    }
 
 };
 
